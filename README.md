@@ -6,7 +6,8 @@ Sample quarkus Hibernate orm application which connects postgress which will be 
 1) Install Istio and Inject Envoy Sidecar for default namespace
 2) Run Postgres within Kubernates with volumes
 3) Build and push the application(Quarkus Hibernate ORM) image into GCR using Quarkus Kubernetes Extention
-4) Deploy the image from GCR into GKE 
+4) Deploy the image from GCR into GKE
+5) Generate some traffic and Monitor Kiali dashboard 
 ~~~
 
 # Steps:
@@ -72,6 +73,24 @@ provide application name as 'Quarkus-hibernate' and leave the namespace to 'defa
 And Click Deploy
 
 Wait till deploying and then expose the service as 'Quarkus-hibernate-service', target port should be 8080
+
+~~~
+
+## 5) Generate some traffic and Monitor Kiali dashboard
+
+~~~
+
+Generate some http traffic using CURL in a seperate terminal as below;
+
+for i in `seq 1 2000`; do curl http://34.71.232.241/; done # change the IP addres of your ingres controller
+
+for i in `seq 1 2000`; do curl http://34.121.217.20/fruits; done # change the IP addres of your ingres controller
+
+Access Kiali dashboard (makesure ISTIO on your PATH where you execute the below commend)
+
+istioctl dashboard kiali
+
+You may monitor the the application owithin kiali dashboard.
 
 ~~~
 
